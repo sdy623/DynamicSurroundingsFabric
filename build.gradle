@@ -8,12 +8,13 @@ subprojects {
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(17)
     java.withSourcesJar()
-    java.withJavadocJar()
+    //java.withJavadocJar()
         
     jar {
-        from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_name}" }
-        }
+
+        from(rootProject.file("LICENSE"))
+        from(rootProject.file("CREDITS.md"))
+
         manifest {
             attributes([
                 'Specification-Title'     : mod_name,
@@ -31,9 +32,8 @@ subprojects {
     }
 
     sourcesJar {
-        from(rootProject.file("LICENSE")) {
-            rename { "${it}_${mod_name}" }
-        }
+        from(rootProject.file("LICENSE"))
+        from(rootProject.file("CREDITS.md"))
     }
 
     repositories {
@@ -46,6 +46,9 @@ subprojects {
             name = 'BlameJared Maven (JEI / CraftTweaker / Bookshelf)'
             url = 'https://maven.blamejared.com'
         }
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url 'https://maven.isxander.dev/releases' }
     }
 
     tasks.withType(JavaCompile).configureEach {

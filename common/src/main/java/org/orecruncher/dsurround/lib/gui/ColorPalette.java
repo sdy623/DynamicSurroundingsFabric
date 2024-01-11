@@ -4,6 +4,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.TextColor;
 import net.minecraft.util.Mth;
 
+import java.util.Locale;
+
 @SuppressWarnings("unused")
 public final class ColorPalette {
     // Branding colors
@@ -100,6 +102,10 @@ public final class ColorPalette {
         return ((red & 0xFF) << 16) |
                 ((green & 0xFF) << 8)  |
                 ((blue & 0xFF));
+    }
+
+    public static String formatColor(TextColor textColor) {
+        return String.format(Locale.ROOT, "#%06X", textColor.getValue());
     }
 
     public static TextColor lerp(float scale, TextColor start, TextColor end) {

@@ -13,6 +13,7 @@ import org.orecruncher.dsurround.config.SoundEventType;
 import org.orecruncher.dsurround.config.biome.biometraits.BiomeTrait;
 import org.orecruncher.dsurround.config.biome.biometraits.BiomeTraits;
 import org.orecruncher.dsurround.config.data.BiomeConfigRule;
+import org.orecruncher.dsurround.lib.gui.ColorPalette;
 import org.orecruncher.dsurround.lib.random.IRandomizer;
 import org.orecruncher.dsurround.lib.registry.RegistryUtils;
 import org.orecruncher.dsurround.lib.WeightTable;
@@ -251,7 +252,7 @@ public final class BiomeInfo implements Comparable<BiomeInfo>, IBiomeSoundProvid
         builder.append("\n").append(getTraits().toString());
 
         if (this.fogColor != null) {
-            builder.append("\nfogColor: ").append(this.fogColor.formatValue());
+            builder.append("\nfogColor: ").append(ColorPalette.formatColor(this.fogColor));
         }
 
         if (!this.loopSounds.isEmpty()) {

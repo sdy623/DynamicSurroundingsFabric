@@ -4,9 +4,11 @@ plugins {
     id 'maven-publish'
     id 'org.spongepowered.gradle.vanilla' version '0.2.1-SNAPSHOT'
 }
+
 base {
-    archivesName = "${mod_name}-common-${minecraft_version}"
+    archivesName = "${mod_name}-Common-${minecraft_version}"
 }
+
 minecraft {
     version(minecraft_version)
     if(file("src/main/resources/${mod_id}.accesswidener").exists()){
@@ -16,18 +18,14 @@ minecraft {
 
 dependencies {
     compileOnly group:'org.spongepowered', name:'mixin', version:'0.8.5'
-    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
-    
-    modImplementation "com.terraformersmc:modmenu:${project.modmenu_version}"
-
-    modImplementation "org.openjdk.nashorn:nashorn-core:${project.nashorn_version}"
-    include("org.openjdk.nashorn:nashorn-core:${project.nashorn_version}")
-
-    // Configuration APIs currently supported by Dynamic Surroundings
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${project.clothapi_version}") {
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.2"))
+    compileOnly group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    compileOnly "org.openjdk.nashorn:nashorn-core:${nashorn_version}"
+    compileOnly "com.terraformersmc:modmenu:${modmenu_version}"
+    compileOnly("me.shedaniel.cloth:cloth-config-fabric:${clothapi_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
-    modImplementation("dev.isxander.yacl:yet-another-config-lib-fabric:${project.yacl_version}")
+    compileOnly("dev.isxander.yacl:yet-another-config-lib-fabric:${yacl_version}")
 }
 
 publishing {

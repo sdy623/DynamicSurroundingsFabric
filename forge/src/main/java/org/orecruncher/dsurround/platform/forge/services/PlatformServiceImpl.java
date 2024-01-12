@@ -1,12 +1,12 @@
 package org.orecruncher.dsurround.platform.forge.services;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forgespi.language.IModInfo;
 import org.orecruncher.dsurround.Client;
 import org.orecruncher.dsurround.Constants;
@@ -86,7 +86,7 @@ public class PlatformServiceImpl implements IPlatform {
 
     @Override
     public Path getConfigPath() {
-        return Minecraft.getInstance().gameDirectory.toPath().resolve("config");
+        return FMLPaths.CONFIGDIR.get();
     }
 
     @Override

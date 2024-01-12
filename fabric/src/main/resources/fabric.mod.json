@@ -8,15 +8,19 @@
         "${mod_author}"
     ],
     "contact": {
-        "homepage": "https://fabricmc.net/",
-        "sources": "https://github.com/FabricMC/fabric-example-mod"
+        "homepage": "${mod_homepage}",
+        "sources": "${mod_sources}",
+        "issues": "${mod_issues}"
     },
     "license": "${license}",
-    "icon": "assets/${mod_id}/${mod_id}.png",
-    "environment": "*",
+    "icon": "assets/${mod_id}/icon.png",
+    "environment": "client",
     "entrypoints": {
-        "main": [
+        "client": [
             "org.orecruncher.dsurround.platform.fabric.FabricMod"
+        ],
+        "modmenu": [
+            "org.orecruncher.dsurround.config.ModConfigMenu"
         ]
     },
     "mixins": [
@@ -24,13 +28,26 @@
         "${mod_id}.fabric.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.15",
+        "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
-        "minecraft": "1.20.4",
+        "minecraft": ">=${minecraft_version}",
         "java": ">=17"
     },
     "suggests": {
-        "another-mod": "*"
+        "cloth-config": ">=${clothapi_version}",
+        "yet_another_config_lib_v3": ">=${yacl_version}"
+    },
+    "custom": {
+        "modmenu": {
+            "links": {
+                "dsurround.mod.link.credits": "https://github.com/OreCruncher/DynamicSurroundingsFabric/blob/main/CREDITS.md",
+                "dsurround.mod.link.nashorn": "https://github.com/openjdk/nashorn"
+            }
+        },
+        "dsurround": {
+            "updateURL": "https://raw.githubusercontent.com/OreCruncher/DynamicSurroundingsFabric/main/versions.json",
+            "curseForgeLink": "https://www.curseforge.com/minecraft/mc-mods/dynamic-surroundings-fabric-edition",
+            "modrinthLink": "https://modrinth.com/mod/${modrinth_slug}"
+        }
     }
 }
-  

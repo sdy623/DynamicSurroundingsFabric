@@ -10,7 +10,7 @@ import org.orecruncher.dsurround.Constants;
 import org.orecruncher.dsurround.platform.forge.commands.ClientCommands;
 
 /**
- * Implements the Forge specific binding to initialize the mod
+ * Implements the Forge-specific binding to initialize the mod
  */
 @SuppressWarnings("unused")
 @Mod(Constants.MOD_ID)
@@ -22,13 +22,15 @@ public class ForgeMod extends Client {
                 IExtensionPoint.DisplayTest.class,
                 () -> new IExtensionPoint.DisplayTest(() -> "dQw4w9WgXcQ", (remoteVersion, isFromServer) -> true));
 
+        this.bootStrap();
 
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::clientSetup);
+
+        ClientCommands.register();
     }
 
-    private void clientSetup(final FMLClientSetupEvent event) {
-        this.initializeClient();
-        ClientCommands.register();
+    private void clientSetup(FMLClientSetupEvent event) {
+        this.initialize();
     }
 }

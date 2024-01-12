@@ -18,8 +18,8 @@ loom {
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
 
-        mixinConfig "${mod_id}-common.mixins.json"
-        mixinConfig "${mod_id}.mixins.json"
+        mixinConfig "${mod_id}.common.mixins.json"
+        mixinConfig "${mod_id}.forge.mixins.json"
     }
 }
 
@@ -37,7 +37,10 @@ dependencies {
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
 
-    include implementation("org.openjdk.nashorn:nashorn-core:${nashorn_version}")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras}"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:${mixin_extras}"))
+
+    //include implementation("org.openjdk.nashorn:nashorn-core:${nashorn_version}")
 
     // Configuration APIs currently supported by Dynamic Surroundings
     modImplementation("me.shedaniel.cloth:cloth-config-forge:${clothapi_version}")

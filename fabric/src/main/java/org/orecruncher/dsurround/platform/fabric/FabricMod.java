@@ -14,7 +14,8 @@ public class FabricMod extends Client implements ClientModInitializer {
     public void onInitializeClient() {
 
         // Boot the mod
-        this.initializeClient();
+        this.bootStrap();
+        this.initialize();
 
         // Fabric specific registrations
         ClientCommandRegistrationCallback.EVENT.register(Commands::register);

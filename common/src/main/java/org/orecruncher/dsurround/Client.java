@@ -42,8 +42,8 @@ public abstract class Client implements IMinecraftMod {
         return Constants.MOD_ID;
     }
 
-    public void initializeClient() {
-        LOGGER.info("Initializing...");
+    protected void bootStrap() {
+        LOGGER.info("Bootstrap...");
 
         // Hook the config load event so set we can set the debug flags on logging
         Configuration.CONFIG_CHANGED.register(event -> {
@@ -55,9 +55,14 @@ public abstract class Client implements IMinecraftMod {
 
         // Bootstrap library functions
         Library.initialize(this, LOGGER);
-        Handlers.registerHandlers();
 
         Config = Configuration.getConfig();
+    }
+
+    protected void initialize() {
+        LOGGER.info("Initializing...");
+
+        Handlers.registerHandlers();
 
         ClientState.STARTED.register(this::onComplete, HandlerPriority.VERY_HIGH);
         ClientState.ON_CONNECT.register(this::onConnect, HandlerPriority.LOW);
@@ -97,11 +102,10 @@ public abstract class Client implements IMinecraftMod {
             this.versionInfo = CompletableFuture.completedFuture(Optional.empty());
 
         KeyBindings.register();
-
-        LOGGER.info("Initialization complete");
     }
 
     public void onComplete(Minecraft client) {
+        LOGGER.info("Completing initialization");
 
         var container = ContainerManager.getRootContainer();
 

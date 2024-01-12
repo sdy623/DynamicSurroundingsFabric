@@ -1,15 +1,12 @@
 package org.orecruncher.dsurround.platform.forge.services;
 
 import net.minecraft.client.KeyMapping;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forgespi.language.IModInfo;
 import org.orecruncher.dsurround.Client;
-import org.orecruncher.dsurround.Constants;
 import org.orecruncher.dsurround.lib.collections.ObjectArray;
 import org.orecruncher.dsurround.lib.platform.IPlatform;
 import org.orecruncher.dsurround.lib.platform.ModInformation;
@@ -25,6 +22,12 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
 public class PlatformServiceImpl implements IPlatform {
+
+    private final ObjectArray<KeyMapping> keyMappings = new ObjectArray<>();
+
+    public PlatformServiceImpl() {
+        MinecraftForge.EVENT_BUS.addListener(this::onRegistration);
+    }
 
     @Override
     public String getPlatformName() {
@@ -105,17 +108,11 @@ public class PlatformServiceImpl implements IPlatform {
     @Override
     public KeyMapping registerKeyBinding(String translationKey, int code, String category) {
         var mapping = new KeyMapping(translationKey, code, category);
-        KeyRegistrationHandler.keyMappings.add(mapping);
+        keyMappings.add(mapping);
         return mapping;
     }
 
-    @Mod.EventBusSubscriber(modid = Constants.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
-    private static class KeyRegistrationHandler {
-        public static final ObjectArray<KeyMapping> keyMappings = new ObjectArray<>();
-
-        @SubscribeEvent
-        public static void onRegistration(RegisterKeyMappingsEvent event) {
-            keyMappings.forEach(event::register);
-        }
+    public void onRegistration(RegisterKeyMappingsEvent event) {
+        keyMappings.forEach(event::register);
     }
 }

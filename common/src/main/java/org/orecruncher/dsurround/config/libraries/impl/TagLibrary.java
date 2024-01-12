@@ -186,20 +186,25 @@ public class TagLibrary implements ITagLibrary {
         Set<Path> tagFiles = this.getTagFiles(tagKey.registry(), tagKey.location());
 
         for (Path tagPath : tagFiles) {
-            try (BufferedReader tagReader = Files.newBufferedReader(tagPath)) {
-                JsonElement jsonElement = JsonParser.parseReader(tagReader);
-                TagFile maybeTagFile = TagFile.CODEC.parse(new Dynamic<>(JsonOps.INSTANCE, jsonElement))
-                        .result().orElse(null);
+            try {
+                this.logger.debug("Processing tag file %s", tagPath.toString());
+                try (BufferedReader tagReader = Files.newBufferedReader(tagPath)) {
+                    JsonElement jsonElement = JsonParser.parseReader(tagReader);
+                    TagFile maybeTagFile = TagFile.CODEC.parse(new Dynamic<>(JsonOps.INSTANCE, jsonElement))
+                            .result().orElse(null);
 
-                if (maybeTagFile != null) {
-                    if (maybeTagFile.replace()) {
-                        entries.clear();
+                    if (maybeTagFile != null) {
+                        if (maybeTagFile.replace()) {
+                            entries.clear();
+                        }
+
+                        entries.addAll(maybeTagFile.entries());
                     }
-
-                    entries.addAll(maybeTagFile.entries());
+                } catch (IOException ex) {
+                    this.logger.error(ex, "Error loading tag: " + tagKey);
                 }
-            } catch (IOException e) {
-                this.logger.error(e, "Error loading tag: " + tagKey);
+            } catch (Exception ex) {
+                this.logger.error(ex, "Error processing tag file %s", tagPath);
             }
         }
 

@@ -27,11 +27,8 @@ import org.orecruncher.dsurround.config.libraries.ITagLibrary;
 import org.orecruncher.dsurround.lib.registry.RegistryUtils;
 import org.orecruncher.dsurround.lib.logging.IModLog;
 import org.orecruncher.dsurround.lib.platform.IPlatform;
+import org.orecruncher.dsurround.lib.resources.ResourceUtils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -182,26 +179,22 @@ public class TagLibrary implements ITagLibrary {
 
     // This is based on the Fabric client tag handling code.
     private <T> TagData<T> loadTagData(TagKey<T> tagKey) {
-        Set<TagEntry> entries = new HashSet<>();
-        Set<Path> tagFiles = this.getTagFiles(tagKey.registry(), tagKey.location());
 
-        for (Path tagPath : tagFiles) {
+        Set<TagEntry> entries = new HashSet<>();
+
+        for (var tagPath : ResourceUtils.findClientTagFiles(tagKey)) {
             try {
                 this.logger.debug("Processing tag file %s", tagPath.toString());
-                try (BufferedReader tagReader = Files.newBufferedReader(tagPath)) {
-                    JsonElement jsonElement = JsonParser.parseReader(tagReader);
-                    TagFile maybeTagFile = TagFile.CODEC.parse(new Dynamic<>(JsonOps.INSTANCE, jsonElement))
-                            .result().orElse(null);
+                JsonElement jsonElement = JsonParser.parseString(tagPath.asString());
+                TagFile maybeTagFile = TagFile.CODEC.parse(new Dynamic<>(JsonOps.INSTANCE, jsonElement))
+                        .result().orElse(null);
 
-                    if (maybeTagFile != null) {
-                        if (maybeTagFile.replace()) {
-                            entries.clear();
-                        }
-
-                        entries.addAll(maybeTagFile.entries());
+                if (maybeTagFile != null) {
+                    if (maybeTagFile.replace()) {
+                        entries.clear();
                     }
-                } catch (IOException ex) {
-                    this.logger.error(ex, "Error loading tag: " + tagKey);
+
+                    entries.addAll(maybeTagFile.entries());
                 }
             } catch (Exception ex) {
                 this.logger.error(ex, "Error processing tag file %s", tagPath);
@@ -248,7 +241,13 @@ public class TagLibrary implements ITagLibrary {
         for (var id : completeIds) {
             var rk = ResourceKey.create(tagKey.registry(), id);
             var instance = registry.get(rk);
-            instances.add(instance);
+            // Could be null if the direct reference is conditional
+            if (instance != null)
+                instances.add(instance);
+        }
+
+        if (!instances.isEmpty()) {
+            int x = 0;
         }
 
         return new TagData<>(
@@ -256,12 +255,6 @@ public class TagLibrary implements ITagLibrary {
                 ImmutableSet.copyOf(completeIds),
                 ImmutableSet.copyOf(immediateChildTags),
                 ImmutableSet.copyOf(immediateChildIds));
-    }
-
-    private Set<Path> getTagFiles(ResourceKey<? extends Registry<?>> registryKey, ResourceLocation identifier) {
-        var tagType = TagManager.getTagDir(registryKey);
-        var tagFile = "data/%s/%s/%s.json".formatted(identifier.getNamespace(), tagType, identifier.getPath());
-        return this.platform.getResourcePaths(tagFile);
     }
 
     private record TagData<T>(

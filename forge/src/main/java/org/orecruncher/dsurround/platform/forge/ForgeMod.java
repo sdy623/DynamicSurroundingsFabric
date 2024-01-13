@@ -14,15 +14,19 @@ import org.orecruncher.dsurround.platform.forge.commands.ClientCommands;
  */
 @SuppressWarnings("unused")
 @Mod(Constants.MOD_ID)
-public class ForgeMod extends Client {
+public class ForgeMod  {
+
+    private final Client client;
 
     public ForgeMod() {
+        this.client = new Client();
+
         // Since we are 100% client side
         ModLoadingContext.get().registerExtensionPoint(
                 IExtensionPoint.DisplayTest.class,
                 () -> new IExtensionPoint.DisplayTest(() -> "dQw4w9WgXcQ", (remoteVersion, isFromServer) -> true));
 
-        this.bootStrap();
+        this.client.bootStrap();
 
         var bus = FMLJavaModLoadingContext.get().getModEventBus();
         bus.addListener(this::clientSetup);
@@ -31,6 +35,6 @@ public class ForgeMod extends Client {
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
-        this.initialize();
+        this.client.initialize();
     }
 }

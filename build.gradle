@@ -1,8 +1,8 @@
 plugins {
     // Required for NeoGradle
-    id 'idea'
-    id 'java'
-    id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
+    //id 'idea'
+    //id 'java'
+    //id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
     id "architectury-plugin" version "3.4-SNAPSHOT"
     id "dev.architectury.loom" version "1.4-SNAPSHOT" apply false
 }
@@ -23,7 +23,6 @@ subprojects {
     }
 
     jar {
-
         from(rootProject.file("LICENSE"))
         from(rootProject.file("CREDITS.md"))
     }
@@ -62,12 +61,6 @@ subprojects {
         inputs.properties(expandProps)
     }
 
-    repositories{
-        maven { url "https://maven.shedaniel.me/" }
-        maven { url "https://maven.terraformersmc.com/" }
-        maven { url 'https://maven.isxander.dev/releases' }        
-    }
-
     dependencies {
         minecraft "com.mojang:minecraft:${rootProject.minecraft_version}"
         // The following line declares the mojmap mappings, you may use other mappings as well
@@ -89,12 +82,10 @@ allprojects {
     version = rootProject.mod_version
     group = rootProject.maven_group
 
-    repositories {
-        // Add repositories to retrieve artifacts from in here.
-        // You should only use this when depending on other mods because
-        // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-        // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-        // for more information about repositories.
+    repositories{
+        maven { url "https://maven.shedaniel.me/" }
+        maven { url "https://maven.terraformersmc.com/" }
+        maven { url 'https://maven.isxander.dev/releases' }
     }
 
     tasks.withType(JavaCompile) {

@@ -4,9 +4,11 @@ import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
 import net.minecraftforge.forgespi.language.IModInfo;
 import org.orecruncher.dsurround.Client;
+import org.orecruncher.dsurround.lib.Library;
 import org.orecruncher.dsurround.lib.collections.ObjectArray;
 import org.orecruncher.dsurround.lib.platform.IPlatform;
 import org.orecruncher.dsurround.lib.platform.ModInformation;
@@ -15,9 +17,7 @@ import org.orecruncher.dsurround.lib.version.SemanticVersion;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
@@ -26,7 +26,8 @@ public class PlatformServiceImpl implements IPlatform {
     private final ObjectArray<KeyMapping> keyMappings = new ObjectArray<>();
 
     public PlatformServiceImpl() {
-        MinecraftForge.EVENT_BUS.addListener(this::onRegistration);
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(this::onRegistration);
     }
 
     @Override
@@ -93,19 +94,6 @@ public class PlatformServiceImpl implements IPlatform {
     }
 
     @Override
-    public Set<Path> getResourcePaths(String path) {
-        Set<Path> out = new HashSet<>();
-
-        var list = ModList.get().getMods();
-
-        for (var mod : list) {
-            out.add(mod.getOwningFile().getFile().getFilePath());
-        }
-
-        return out;
-    }
-
-    @Override
     public KeyMapping registerKeyBinding(String translationKey, int code, String category) {
         var mapping = new KeyMapping(translationKey, code, category);
         keyMappings.add(mapping);
@@ -113,6 +101,7 @@ public class PlatformServiceImpl implements IPlatform {
     }
 
     public void onRegistration(RegisterKeyMappingsEvent event) {
+        Library.getLogger().debug("Forge key bind event received");
         keyMappings.forEach(event::register);
     }
 }

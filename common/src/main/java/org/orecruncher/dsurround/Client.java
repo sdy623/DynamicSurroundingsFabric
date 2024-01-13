@@ -26,7 +26,7 @@ import org.orecruncher.dsurround.sound.MinecraftAudioPlayer;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-public abstract class Client implements IMinecraftMod {
+public final class Client implements IMinecraftMod {
 
     public static final ModLog LOGGER = new ModLog(Constants.MOD_ID);
 
@@ -42,7 +42,7 @@ public abstract class Client implements IMinecraftMod {
         return Constants.MOD_ID;
     }
 
-    protected void bootStrap() {
+    public void bootStrap() {
         LOGGER.info("Bootstrap...");
 
         // Hook the config load event so set we can set the debug flags on logging
@@ -57,9 +57,12 @@ public abstract class Client implements IMinecraftMod {
         Library.initialize(this, LOGGER);
 
         Config = Configuration.getConfig();
+
+        // Register keybinds
+        KeyBindings.register();
     }
 
-    protected void initialize() {
+    public void initialize() {
         LOGGER.info("Initializing...");
 
         Handlers.registerHandlers();
@@ -100,8 +103,6 @@ public abstract class Client implements IMinecraftMod {
             this.versionInfo = CompletableFuture.supplyAsync(ContainerManager.resolve(IVersionChecker.class)::getUpdateText);
         else
             this.versionInfo = CompletableFuture.completedFuture(Optional.empty());
-
-        KeyBindings.register();
     }
 
     public void onComplete(Minecraft client) {

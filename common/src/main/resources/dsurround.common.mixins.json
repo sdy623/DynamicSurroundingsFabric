@@ -25,7 +25,7 @@
     "core.MixinClothAbstractConfigEntry",
     "core.MixinEntity",
     "core.MixinEntityArrow",
-    "core.MixinIngameHud",
+    "core.MixinGui",
     "core.MixinLivingEntity",
     "core.MixinParticleManager",
     "core.MixinRainSplashParticle",

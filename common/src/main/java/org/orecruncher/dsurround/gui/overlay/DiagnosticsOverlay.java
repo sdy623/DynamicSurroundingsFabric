@@ -87,8 +87,8 @@ public class DiagnosticsOverlay extends AbstractOverlay {
         this.plugins.add(new SoundEngineDiagnosticsPlugin());
     }
 
-    public void toggleCollection() {
-        this.enableCollection = !this.enableCollection;
+    public boolean toggleCollection() {
+        return this.enableCollection = !this.enableCollection;
     }
 
     @Override

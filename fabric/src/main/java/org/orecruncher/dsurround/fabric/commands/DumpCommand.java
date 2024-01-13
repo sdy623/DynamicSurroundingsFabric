@@ -1,19 +1,19 @@
-package org.orecruncher.dsurround.platform.forge.commands;
+package org.orecruncher.dsurround.fabric.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.commands.CommandBuildContext;
-import net.minecraft.commands.CommandSourceStack;
 import org.orecruncher.dsurround.commands.DumpCommandHandler;
 
-import static net.minecraft.commands.Commands.literal;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-class DumpCommand extends AbstractClientCommand {
+class DumpCommand extends ClientCommand {
 
     DumpCommand() {
         super("dsdump");
     }
 
-    public void register(CommandDispatcher<CommandSourceStack> dispatcher, CommandBuildContext registryAccess) {
+    public void register(CommandDispatcher<FabricClientCommandSource> dispatcher, CommandBuildContext registryAccess) {
         dispatcher.register(literal(this.command)
                 .then(
                         literal("biomes")

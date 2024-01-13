@@ -1,4 +1,4 @@
-package org.orecruncher.dsurround.platform.forge.services;
+package org.orecruncher.dsurround.forge.services;
 
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;

@@ -1,9 +1,9 @@
-package org.orecruncher.dsurround.platform.fabric;
+package org.orecruncher.dsurround.fabric;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import org.orecruncher.dsurround.Client;
-import org.orecruncher.dsurround.platform.fabric.commands.Commands;
+import org.orecruncher.dsurround.fabric.commands.Commands;
 
 /**
  * Implements the Fabric specific binding to initialize the mod

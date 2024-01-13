@@ -47,6 +47,7 @@ public class KeyBindings {
             return;
 
         if (modConfigurationMenu.consumeClick()) {
+            Library.getLogger().debug("Activating mod configuration menu");
             var screenFactory = FactoryResolver.getModConfigScreenFactory();
             if (screenFactory != null)
                 GameUtils.setScreen(screenFactory.create(null));
@@ -54,10 +55,13 @@ public class KeyBindings {
                 Library.getLogger().info("Configuration GUI libraries not present");
         }
 
-        if (diagnosticHud.consumeClick())
-            ContainerManager.resolve(DiagnosticsOverlay.class).toggleCollection();
+        if (diagnosticHud.consumeClick()) {
+            var result = ContainerManager.resolve(DiagnosticsOverlay.class).toggleCollection();
+            Library.getLogger().debug("Toggling diagnostic overlay: %s", result);
+        }
 
         if (individualSoundConfigBinding.consumeClick()) {
+            Library.getLogger().debug("Activating individual sound configuration menu");
             final boolean singlePlayer = GameUtils.isSinglePlayer();
             GameUtils.setScreen(new IndividualSoundControlScreen(null, singlePlayer));
             if (singlePlayer)

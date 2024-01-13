@@ -27,12 +27,15 @@ configurations {
     common
     shadowCommon // Don't use shadow from the shadow plugin since it *excludes* files.
     compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
+    //runtimeClasspath.extendsFrom common
     developmentForge.extendsFrom common
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    forge("net.minecraftforge:forge:${minecraft_version}-${forge_version}") {
+        exclude(module: "gson")
+        exclude(module: "com.google.gson")
+    }
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

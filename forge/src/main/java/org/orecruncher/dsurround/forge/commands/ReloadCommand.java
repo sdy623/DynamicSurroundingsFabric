@@ -1,4 +1,4 @@
-package org.orecruncher.dsurround.platform.forge.commands;
+package org.orecruncher.dsurround.forge.commands;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandBuildContext;

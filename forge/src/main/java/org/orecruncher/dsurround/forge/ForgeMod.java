@@ -1,4 +1,4 @@
-package org.orecruncher.dsurround.platform.forge;
+package org.orecruncher.dsurround.forge;
 
 import net.minecraftforge.fml.IExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -7,7 +7,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.orecruncher.dsurround.Client;
 import org.orecruncher.dsurround.Constants;
-import org.orecruncher.dsurround.platform.forge.commands.ClientCommands;
+import org.orecruncher.dsurround.forge.commands.ClientCommands;
 
 /**
  * Implements the Forge-specific binding to initialize the mod

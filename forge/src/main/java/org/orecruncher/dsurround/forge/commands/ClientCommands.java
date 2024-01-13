@@ -1,4 +1,4 @@
-package org.orecruncher.dsurround.platform.forge.commands;
+package org.orecruncher.dsurround.forge.commands;
 
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterClientCommandsEvent;

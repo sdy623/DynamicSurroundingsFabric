@@ -1,8 +1,7 @@
-package org.orecruncher.dsurround.platform.forge.services;
+package org.orecruncher.dsurround.forge.services;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLPaths;
@@ -96,12 +95,12 @@ public class PlatformServiceImpl implements IPlatform {
     @Override
     public KeyMapping registerKeyBinding(String translationKey, int code, String category) {
         var mapping = new KeyMapping(translationKey, code, category);
-        keyMappings.add(mapping);
+        this.keyMappings.add(mapping);
         return mapping;
     }
 
     public void onRegistration(RegisterKeyMappingsEvent event) {
-        Library.getLogger().debug("Forge key bind event received");
-        keyMappings.forEach(event::register);
+        Library.getLogger().debug("Forge key bind event received; registering %d mappings", this.keyMappings.size());
+        this.keyMappings.forEach(event::register);
     }
 }

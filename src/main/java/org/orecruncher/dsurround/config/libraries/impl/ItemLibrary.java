@@ -110,9 +110,9 @@ public class ItemLibrary implements IItemLibrary {
         SoundEvent itemEquipSound = null;
 
         if (item instanceof Equipable equipment)
-            itemEquipSound = equipment.getEquipSound();
+            itemEquipSound = equipment.getEquipSound().value();
         else if (item instanceof ArmorItem armor)
-            itemEquipSound = armor.getEquipSound();
+            itemEquipSound = armor.getEquipSound().value();
 
         return itemEquipSound;
     }
@@ -127,7 +127,7 @@ public class ItemLibrary implements IItemLibrary {
         var item = stack.getItem();
 
         if (item instanceof ElytraItem elytraItem)
-            itemEquipSound = elytraItem.getEquipSound();
+            itemEquipSound = elytraItem.getEquipSound().value();
         else if (this.tagLibrary.is(ItemTags.LAVA_BUCKETS, stack))
             itemEquipSound = SoundEvents.BUCKET_FILL_LAVA;
         else if (this.tagLibrary.is(ItemTags.WATER_BUCKETS, stack))

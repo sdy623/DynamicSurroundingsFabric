@@ -1,0 +1,31 @@
+package org.orecruncher.dsurround.tags;
+
+import java.util.Collection;
+import java.util.HashSet;
+import net.minecraft.registry.tag.TagKey;
+
+/**
+ * Helps facilitate processing of tags during startup
+ */
+public final class ModTags {
+    private ModTags() {
+
+    }
+
+    private static final Collection<TagKey<?>> MOD_TAGS = new HashSet<>();
+
+    static {
+        MOD_TAGS.addAll(BiomeTags.TAGS);
+        MOD_TAGS.addAll(BlockEffectTags.TAGS);
+        MOD_TAGS.addAll(EntityEffectTags.TAGS);
+        MOD_TAGS.addAll(ItemEffectTags.TAGS);
+        MOD_TAGS.addAll(ItemTags.TAGS);
+        MOD_TAGS.addAll(OcclusionTags.TAGS);
+        MOD_TAGS.addAll(ReflectanceTags.TAGS);
+        MOD_TAGS.addAll(FluidTags.TAGS);
+    }
+
+    public static Collection<TagKey<?>> getModTags() {
+        return MOD_TAGS;
+    }
+}

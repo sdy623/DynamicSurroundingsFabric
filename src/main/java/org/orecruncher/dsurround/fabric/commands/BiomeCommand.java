@@ -39,6 +39,6 @@ class BiomeCommand extends AbstractClientCommand {
         }
 
         var script = ctx.getArgument(SCRIPT_PARAMETER, MessageArgument.Message.class);
-        return this.execute(ctx, () -> BiomeCommandHandler.execute(registryKey.location(), script.getText()));
+        return this.execute(ctx, () -> BiomeCommandHandler.execute(registryKey.location(), script.text()));
     }
 }

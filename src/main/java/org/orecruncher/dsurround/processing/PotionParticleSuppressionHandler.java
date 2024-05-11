@@ -1,7 +1,7 @@
 package org.orecruncher.dsurround.processing;
 
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.alchemy.PotionUtils;
+import net.minecraft.world.item.alchemy.PotionContents;
 import org.orecruncher.dsurround.Configuration;
 import org.orecruncher.dsurround.lib.GameUtils;
 import org.orecruncher.dsurround.lib.logging.IModLog;
@@ -57,6 +57,6 @@ public class PotionParticleSuppressionHandler extends AbstractClientHandler {
 
     private static void unsuppressPotionParticles(Player player) {
         var accessor = (ILivingEntityExtended)player;
-        accessor.dsurround_setPotionSwirlColor(PotionUtils.getColor(player.getActiveEffects()));
+        accessor.dsurround_setPotionSwirlColor(PotionContents.getColor(player.getActiveEffects()));
     }
 }

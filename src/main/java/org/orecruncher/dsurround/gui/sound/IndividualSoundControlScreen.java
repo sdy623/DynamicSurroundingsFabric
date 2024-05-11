@@ -138,7 +138,7 @@ public class IndividualSoundControlScreen extends Screen {
         if (this.parent == null)
             this.renderTransparentBackground(context);
         else
-            this.renderDirtBackground(context);
+            this.renderMenuBackground(context); // ???
 
         context.drawCenteredString(this.font, this.title, this.width / 2, TOP_OFFSET, ColorPalette.MC_WHITE.getValue());
 

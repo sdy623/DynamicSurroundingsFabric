@@ -22,6 +22,6 @@ class ScriptCommand extends AbstractClientCommand {
 
     private int execute(CommandContext<FabricClientCommandSource> ctx) {
         var script = ctx.getArgument(SCRIPT_PARAMETER, MessageArgument.Message.class);
-        return this.execute(ctx, () -> ScriptCommandHandler.execute(script.getText()));
+        return this.execute(ctx, () -> ScriptCommandHandler.execute(script.text()));
     }
 }

@@ -44,8 +44,7 @@ public class IndividualSoundControlList extends AbstractSelectionList<Individual
 
         // Initialize the first pass
         this.setSearchFilter(filter);
-
-        this.setRenderBackground(false);
+        //this.setRenderBackground(false);
     }
 
     @Override

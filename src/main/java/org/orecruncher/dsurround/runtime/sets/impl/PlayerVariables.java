@@ -210,7 +210,7 @@ public class PlayerVariables extends VariableSet<IPlayerVariables> implements IP
         try {
             var id = new ResourceLocation(effect);
             var r = RegistryUtils.getRegistryEntry(Registries.MOB_EFFECT, id).orElseThrow();
-            return GameUtils.getPlayer().map(p -> p.hasEffect(r.value())).orElse(false);
+            return GameUtils.getPlayer().map(p -> p.hasEffect(r)).orElse(false);
         } catch (Throwable ignore) {
         }
 

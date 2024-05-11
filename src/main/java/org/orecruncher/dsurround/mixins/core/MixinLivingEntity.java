@@ -21,7 +21,7 @@ public class MixinLivingEntity implements ILivingEntityExtended {
 
     @Final
     @Shadow
-    private static EntityDataAccessor<Integer> DATA_EFFECT_COLOR_ID;
+    private static EntityDataAccessor<Integer> DATA_EFFECT_PARTICLES;
 
     @Override
     public EntityEffectInfo dsurround_getEffectInfo() {
@@ -41,12 +41,12 @@ public class MixinLivingEntity implements ILivingEntityExtended {
     @Override
     public int dsurround_getPotionSwirlColor() {
         var entity =  ((LivingEntity)((Object)this));
-        return entity.getEntityData().get(DATA_EFFECT_COLOR_ID);
+        return entity.getEntityData().get(DATA_EFFECT_PARTICLES);
     }
 
     @Override
     public void dsurround_setPotionSwirlColor(int color) {
         var entity =  ((LivingEntity)((Object)this));
-        entity.getEntityData().set(DATA_EFFECT_COLOR_ID, color);
+        entity.getEntityData().set(DATA_EFFECT_PARTICLES, color);
     }
 }

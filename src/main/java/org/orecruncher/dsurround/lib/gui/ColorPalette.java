@@ -92,7 +92,7 @@ public final class ColorPalette {
     }
 
     private static TextColor of(String formatColor) {
-        return TextColor.parseColor(formatColor).getOrThrow(false, (msg)-> {});
+        return TextColor.parseColor(formatColor).getOrThrow(msg -> new RuntimeException(msg));
     }
 
     private static TextColor of(int red, int green, int blue) {
